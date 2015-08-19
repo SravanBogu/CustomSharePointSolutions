@@ -1,15 +1,9 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using LinqToTwitter;
 using Newtonsoft.Json;
 using Core.Domain;
 using Core.Data;
 using Integration.Twitter.Domain;
-using System.Threading;
-using System.Collections.Generic;
 
 namespace Integration.Twitter
 {
@@ -35,7 +29,8 @@ namespace Integration.Twitter
 
             return new TwitterContext(auth);
         }
-
+        
+        //Gets tweets and updates azure database
         public static string GetNewMaxIDandUpdateDB(string twitterAccountToDisplay, ulong sinceID = 544516702412723892)
         {
             string currentDate = DateTime.Now.ToString();
@@ -50,7 +45,8 @@ namespace Integration.Twitter
 
             return message;
         }
-
+        
+        //Gets new maxID
         public static ulong GetNewMaxID(string twitterAccountToDisplay)
         {
             //string newStatusID = "No MaxID found"; //UInt64
@@ -87,7 +83,8 @@ namespace Integration.Twitter
 
             return newMaxID; // newStatusID;
         }
-
+        
+        //Gets tweets asynchronously
         public static async Task GetSearchTweetsAsync(string twitterAccountToDisplay, ulong sinceID)
         {
             try
@@ -193,7 +190,8 @@ namespace Integration.Twitter
                 Console.WriteLine("Error : " + ex);
             }
         }
-
+        
+        //Map tweets to list before writing to database
         public static List<OnlyTweet> SetTweetsOnly(IEnumerable<Status> statusTweets)  //IQueryable
         {
             var sTweetsOnlyList = new List<OnlyTweet>();
@@ -224,7 +222,8 @@ namespace Integration.Twitter
 
             return sTweetsOnlyList;
         }
-
+        
+        //Write tweets to azure database
         public static bool SetTweetsOnlyToDB(List<OnlyTweet> sTweetsOnlyList)
         {
             var sTweetExist = false;
@@ -298,11 +297,7 @@ namespace Integration.Twitter
             return sTweetExist;
         }
 
-        /// <summary>
-        /// Gets Twitter Feed from database
-        /// </summary>
-        /// <param name="twitterAccountToDisplay"></param>
-        /// <returns></returns>
+        // Gets Twitter Feed from azure database
         public static ICollection<StatusTweet> GetTweetsOnlyFeedFromDB(string twitterAccountToDisplay)
         {
             var stList = new List<StatusTweet>();
@@ -331,7 +326,7 @@ namespace Integration.Twitter
 
                         switch (item.ScreenName)
                         {
-                            case "Linq2Twitr":
+                            case "Linq2Twitr": //Sample Username: https://twitter.com/Linq2Twitr
                                 st.ProfileImageUrlHttps = "https://pbs.twimg.com/profile_images/378800000625948439/57f4351535721aeedc632745ceaacfea_400x400.png";
                                 break;
                             default:
