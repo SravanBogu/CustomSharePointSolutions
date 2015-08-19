@@ -1,18 +1,13 @@
 using System;
-using System.Globalization;
-using System.Linq;
-using System.Threading.Tasks;
 using LinqToTwitter;
 using Newtonsoft.Json;
 using Core.Domain;
 using Core.Data;
 using Integration.Twitter.Domain;
-using System.Threading;
-using System.Collections.Generic;
 
 namespace Integration.Twitter
 {
-    public class Helper
+    public class TwHelper
     {
         private readonly string _key = string.Empty;
         private readonly string _secret = string.Empty;
