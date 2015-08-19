@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace Integration.Instagram
 {
-    public class Helper
+    public class IgHelper
     {
         //returns Instagram object
         public static ICollection<IgFeedItem> ReadFeed(string IgUserId, string AccessToken)
